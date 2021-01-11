@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PlayVideo.PlayerVideoActivity">
+
+
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/videoplay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:resize_mode="fill"
+        app:show_buffering="when_playing"
+        app:use_artwork="true"
+        app:use_controller="false"
+        tools:ignore="MissingConstraints" />
+    <LinearLayout
+        android:id="@+id/linear_lay_control"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="100dp"
+        android:layout_marginBottom="50dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="false"
+            android:splitTrack="false"
+            android:thumbOffset="8dp"
+            android:background="@android:color/transparent"
+            android:progressDrawable="@drawable/seekbarp"
+            android:thumbTint="@color/textbg"
+            android:id="@+id/seekBar"
+            />
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginHorizontal="16dp"
+            app:cardBackgroundColor="@color/playcontrolbg"
+            android:layout_alignParentBottom="true">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/imagedrawable"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+
+                >
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="12dp">
+
+                        <TextView
+                            android:id="@+id/tv_starttime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/sp10"
+                            android:textColor="@color/white"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_end_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/sp10"
+                            android:layout_alignParentEnd="true"
+                            android:textColor="@color/white"/>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_centerInParent="true"
+                        >
+                        <ImageView
+                            android:id="@+id/img_prev"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/exo_controls_previous"/>
+                        <ImageView
+                            android:id="@+id/img_fast_rewind"
+                            android:layout_width="wrap_content"
+                            android:layout_marginStart="40dp"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/img_prev"
+                            android:src="@drawable/exo_controls_rewind"/>
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/img_fast_rewind"
+                            android:id="@+id/rel">
+                            <ImageView
+                                android:visibility="gone"
+                                android:id="@+id/img_play"
+                                android:layout_marginStart="40dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/exo_controls_play"/>
+                            <ImageView
+                                android:id="@+id/img_pause"
+                                android:layout_width="wrap_content"
+                                android:layout_marginStart="40dp"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/exo_controls_pause"/>
+                        </RelativeLayout>
+
+                        <ImageView
+                            android:layout_marginStart="40dp"
+                            android:id="@+id/img_fast_forward"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/rel"
+                            android:src="@drawable/exo_controls_fastforward"/>
+                        <ImageView
+                            android:layout_marginStart="40dp"
+                            android:id="@+id/img_next"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/img_fast_forward"
+                            android:src="@drawable/exo_controls_next"/>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

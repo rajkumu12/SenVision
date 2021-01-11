@@ -1,0 +1,4 @@
+<resources>
+
+    <style name="Theme.SenVisionTv" parent="@style/Theme.Leanback" />
+</resources>

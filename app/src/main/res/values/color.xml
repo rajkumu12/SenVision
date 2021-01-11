@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFF</color>
+    <color name="colorPrimaryDark">#000</color>
+    <color name="colorAccent">#000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="lighpurpl">#5F0D91</color>
+    <color name="bg">#1D1836</color>
+    <color name="imgbg">#16112B</color>
+    <color name="textbg">#A627FF</color>
+    <color name="playcontrolbg">#2F8CF9</color>
+</resources>
