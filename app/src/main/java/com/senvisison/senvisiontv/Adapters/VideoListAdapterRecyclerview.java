@@ -1,8 +1,12 @@
  package com.senvisison.senvisiontv.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -25,7 +30,7 @@ public class VideoListAdapterRecyclerview  extends RecyclerView.Adapter<VideoLis
 
     private Context context;
     private List<ModelVideo> arrayList;
-
+    int selected_position = 0;
     public VideoListAdapterRecyclerview(Context context, List<ModelVideo> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
@@ -35,6 +40,8 @@ public class VideoListAdapterRecyclerview  extends RecyclerView.Adapter<VideoLis
     @Override
     public VideoListAdapterRecyclerview.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.video_items_view, parent, false);
+        v.setFocusable(true);
+        v.setFocusableInTouchMode(true);
         return new VideoListAdapterRecyclerview.ViewHolder(v);
     }
 
@@ -48,6 +55,7 @@ public class VideoListAdapterRecyclerview  extends RecyclerView.Adapter<VideoLis
         Glide.with(context).asBitmap()
                 .load(modelVideo.getThumb()) // or URI/path
                 .into(holder.img_poster); //imageview to set thumbnail to
+
 
         holder.img_poster.setOnClickListener(new View.OnClickListener() {
             @Override

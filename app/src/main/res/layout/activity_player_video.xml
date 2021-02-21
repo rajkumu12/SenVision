@@ -16,6 +16,17 @@
         app:use_artwork="true"
         app:use_controller="false"
         tools:ignore="MissingConstraints" />
+
+    <com.senvisison.senvisiontv.ScaleFocusImageView
+        android:layout_width="36dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_height="36dp"
+        android:id="@+id/img_back"
+        android:visibility="gone"
+        android:background="@color/playcontrolbg"
+        android:src="@drawable/ic_baseline_keyboard_backspace_24"
+        />
     <LinearLayout
         android:id="@+id/linear_lay_control"
         android:layout_width="match_parent"
@@ -87,15 +98,19 @@
                         android:gravity="center"
                         android:layout_centerInParent="true"
                         >
-                        <ImageView
+                        <com.senvisison.senvisiontv.ScaleFocusImageView
                             android:id="@+id/img_prev"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:focusable="true"
+                            android:background="@drawable/itemviews_selectors"
                             android:src="@drawable/exo_controls_previous"/>
-                        <ImageView
+                        <com.senvisison.senvisiontv.ScaleFocusImageView
                             android:id="@+id/img_fast_rewind"
                             android:layout_width="wrap_content"
                             android:layout_marginStart="40dp"
+                            android:focusable="true"
+                            android:background="@drawable/itemviews_selectors"
                             android:layout_height="wrap_content"
                             android:layout_toRightOf="@+id/img_prev"
                             android:src="@drawable/exo_controls_rewind"/>
@@ -104,33 +119,41 @@
                             android:layout_height="wrap_content"
                             android:layout_toRightOf="@+id/img_fast_rewind"
                             android:id="@+id/rel">
-                            <ImageView
+                            <com.senvisison.senvisiontv.ScaleFocusImageView
                                 android:visibility="gone"
                                 android:id="@+id/img_play"
                                 android:layout_marginStart="40dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:focusable="true"
+                                android:background="@drawable/itemviews_selectors"
                                 android:src="@drawable/exo_controls_play"/>
-                            <ImageView
+                            <com.senvisison.senvisiontv.ScaleFocusImageView
                                 android:id="@+id/img_pause"
                                 android:layout_width="wrap_content"
                                 android:layout_marginStart="40dp"
                                 android:layout_height="wrap_content"
+                                android:focusable="true"
+                                android:background="@drawable/itemviews_selectors"
                                 android:src="@drawable/exo_controls_pause"/>
                         </RelativeLayout>
 
-                        <ImageView
+                        <com.senvisison.senvisiontv.ScaleFocusImageView
                             android:layout_marginStart="40dp"
                             android:id="@+id/img_fast_forward"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toRightOf="@+id/rel"
+                            android:focusable="true"
+                            android:background="@drawable/itemviews_selectors"
                             android:src="@drawable/exo_controls_fastforward"/>
-                        <ImageView
+                        <com.senvisison.senvisiontv.ScaleFocusImageView
                             android:layout_marginStart="40dp"
                             android:id="@+id/img_next"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:focusable="true"
+                            android:background="@drawable/itemviews_selectors"
                             android:layout_toRightOf="@+id/img_fast_forward"
                             android:src="@drawable/exo_controls_next"/>
                     </RelativeLayout>

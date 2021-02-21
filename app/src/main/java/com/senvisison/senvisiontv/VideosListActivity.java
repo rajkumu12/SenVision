@@ -22,6 +22,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -33,10 +34,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import app.com.tvrecyclerview.TvRecyclerView;
+
 public class VideosListActivity extends AppCompatActivity {
 
    public static List<ModelVideo>videoList;
-    RecyclerView recyclerView_list;
+   TvRecyclerView recyclerView_list;
     int data,folder,id,thumb,title,duration;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +51,7 @@ public class VideosListActivity extends AppCompatActivity {
 
 
         checkPermissions();
-        recyclerView_list=findViewById(R.id.recyclerview_video);
+        recyclerView_list=findViewById(R.id.tv_recycler_view);
 
         loadVideos();
 
@@ -135,6 +138,18 @@ public class VideosListActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));*/
         recyclerView_list.setItemAnimator(new DefaultItemAnimator());
         recyclerView_list.setAdapter(videoListAdapterRecyclerview);
+        recyclerView_list.setOnItemStateListener(new TvRecyclerView.OnItemStateListener() {
+            @Override
+            public void onItemViewClick(View view, int position) {
+                Log.i("lolllllllll", "you click item position: " + position);
+            }
+
+            @Override
+            public void onItemViewFocusChanged(boolean gainFocus, View view, int position) {
+            }
+        });
+
+        recyclerView_list.setSelectPadding(8, 8, 8, 8);
        /* adapter.notifyDataSetChanged();*/
         cursor.close();
 

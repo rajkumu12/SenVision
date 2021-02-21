@@ -47,19 +47,19 @@ import com.senvisison.senvisiontv.Model.ModelVideo;
 import com.senvisison.senvisiontv.R;
 import com.senvisison.senvisiontv.VideosListActivity;
 
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class PlayerVideoActivity extends AppCompatActivity implements View.OnClickListener {
-
     ExoPlayer player;
     String video_path;
     ExtractorMediaSource mediaSource;
     PlayerView exoPlayer;
     private int currentApiVersion;
     TextView textView_startime, tv_endtime;
-    ImageView imageView_prev, image_next, image_fast_rwind, image_fast_forward, image_play, iamge_pause;
+    ImageView imageView_prev, image_next, image_fast_rwind, image_fast_forward, image_play, iamge_pause,imageView_back;
     SeekBar seekBar;
     public static int position;
     List<ModelVideo> videoList1 = VideosListActivity.videoList;
@@ -71,7 +71,7 @@ public class PlayerVideoActivity extends AppCompatActivity implements View.OnCli
     LinearLayout linear_lay_control;
     boolean m = false;
     CountDownTimer timer;
-    boolean play=false;
+    boolean play = false;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -125,6 +125,7 @@ public class PlayerVideoActivity extends AppCompatActivity implements View.OnCli
         textView_startime = findViewById(R.id.tv_starttime);
         tv_endtime = findViewById(R.id.tv_end_time);
         seekBar = findViewById(R.id.seekBar);
+        imageView_back = findViewById(R.id.img_back);
         linear_lay_control = findViewById(R.id.linear_lay_control);
 
         Intent intent = getIntent();
@@ -139,6 +140,7 @@ public class PlayerVideoActivity extends AppCompatActivity implements View.OnCli
         image_fast_forward.setOnClickListener(this);
         image_play.setOnClickListener(this);
         iamge_pause.setOnClickListener(this);
+        imageView_back.setOnClickListener(this);
 
 
       /*  exoPlayer.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +150,7 @@ public class PlayerVideoActivity extends AppCompatActivity implements View.OnCli
             }
         });
 */
-      exoPlayer.setOnTouchListener(new View.OnTouchListener() {
+        exoPlayer.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 showcontrols();
@@ -163,10 +165,12 @@ public class PlayerVideoActivity extends AppCompatActivity implements View.OnCli
 
     private void showcontrols() {
         if (!m) {
+            imageView_back.setVisibility(View.VISIBLE);
             linear_lay_control.setVisibility(View.VISIBLE);
             timer();
             m = true;
         } else {
+            imageView_back.setVisibility(View.GONE);
             linear_lay_control.setVisibility(View.GONE);
             m = false;
         }
@@ -229,19 +233,13 @@ public class PlayerVideoActivity extends AppCompatActivity implements View.OnCli
                 }
             }
         }
-
-
     }
+
 
     @SuppressLint("WrongConstant")
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void initializePlayer(int position) {
-
-
         /* Data1 data1=videolist.get(0);*/
-
-
-
         /*String videoPath = RawResourceDataSource.buildRawResourceUri(R.raw.mmm).toString();*/
         DefaultHttpDataSourceFactory dataSourceFactory = new DefaultHttpDataSourceFactory("exoplayer_video");
 /*
@@ -252,7 +250,7 @@ public class PlayerVideoActivity extends AppCompatActivity implements View.OnCli
         }*/
 
 
-        play=true;
+        play = true;
         ModelVideo modelVideo = videoList1.get(position);
         String pathplay = modelVideo.getThumb();
 
@@ -314,7 +312,6 @@ public class PlayerVideoActivity extends AppCompatActivity implements View.OnCli
 
             @Override
             public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-
                 switch (playbackState) {
                     case Player.STATE_BUFFERING:
                         Log.d("okkkll", "buffering");
@@ -333,7 +330,6 @@ public class PlayerVideoActivity extends AppCompatActivity implements View.OnCli
                         // status = PlaybackStatus.IDLE;
                         break;
                 }
-
             }
 
             @Override
@@ -422,6 +418,7 @@ public class PlayerVideoActivity extends AppCompatActivity implements View.OnCli
             player.release();
             player.setPlayWhenReady(false);
             player = null;
+            finish();
         }
     }
 
@@ -479,6 +476,13 @@ public class PlayerVideoActivity extends AppCompatActivity implements View.OnCli
                 player.setPlayWhenReady(true);
                 image_play.setVisibility(View.GONE);
                 iamge_pause.setVisibility(View.VISIBLE);
+            }
+        }else if (id==R.id.img_back){
+            if (player != null) {
+                player.release();
+                player.setPlayWhenReady(false);
+                player = null;
+                finish();
             }
         }
 
@@ -577,7 +581,14 @@ public class PlayerVideoActivity extends AppCompatActivity implements View.OnCli
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
 
-        if (event.getAction() == KeyEvent.KEYCODE_MEDIA_NEXT) {
+        Log.d("kjvhjkvhjsvfs","keycode"+event.getKeyCode()+"   action"+event.getAction());
+        if (event.getKeyCode() == KeyEvent.KEYCODE_DPAD_CENTER) {
+            showcontrols();
+            /*paypause();*/
+        }else if (event.getKeyCode()== KeyEvent.KEYCODE_BACK){
+            paypause();
+        }
+       /* if (event.getAction() == KeyEvent.KEYCODE_MEDIA_NEXT) {
 
             playnext();
 
@@ -593,31 +604,59 @@ public class PlayerVideoActivity extends AppCompatActivity implements View.OnCli
                     initializePlayer(position);
                 }
             }
-        }else if (event.getAction() == KeyEvent.KEYCODE_MEDIA_PAUSE){
+        } else if (event.getAction() == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE) {
+
             if (player != null) {
-                player.setPlayWhenReady(false);
-                image_play.setVisibility(View.VISIBLE);
-                iamge_pause.setVisibility(View.GONE);
+                if (player.isPlaying()) {
+                    player.setPlayWhenReady(false);
+                   *//* image_play.setVisibility(View.VISIBLE);
+                    iamge_pause.setVisibility(View.GONE); *//*
+                } else {
+                    player.setPlayWhenReady(true);
+                   *//* image_play.setVisibility(View.GONE);
+                    iamge_pause.setVisibility(View.VISIBLE); *//*
+                }
+
             }
-        }else if (event.getAction() == KeyEvent.KEYCODE_MEDIA_PLAY){
+        }*//*else if (event.getAction() == KeyEvent.KEYCODE_MEDIA_PLAY){
             if (player != null) {
                 player.setPlayWhenReady(true);
                 image_play.setVisibility(View.GONE);
                 iamge_pause.setVisibility(View.VISIBLE);
             }
-        }
-        else if (event.getAction() == KeyEvent.KEYCODE_MEDIA_FAST_FORWARD){
+        }*//* else if (event.getAction() == KeyEvent.KEYCODE_MEDIA_FAST_FORWARD) {
             player.seekTo(player.getCurrentPosition() + 10000);
             seekBar.setProgress((int) (player.getCurrentPosition() + 10000));
-        }else if (event.getAction() == KeyEvent.KEYCODE_MEDIA_SKIP_BACKWARD){
+        } else if (event.getAction() == KeyEvent.KEYCODE_MEDIA_SKIP_BACKWARD) {
             if (player.getCurrentPosition() != 0) {
                 player.seekTo(player.getCurrentPosition() - 10000);
                 seekBar.setProgress((int) (player.getCurrentPosition() - 10000));
             }
-        }else if (event.getAction() == KeyEvent.ACTION_UP){
-            showcontrols();
-        }
+        } else if (event.getAction() == KeyEvent.ACTION_UP) {
 
+            paypause();
+        }else if (event.getAction() == KeyEvent.KEYCODE_NAVIGATE_PREVIOUS){
+            if (player != null) {
+                player.release();
+                player.setPlayWhenReady(false);
+                player = null;
+                finish();
+            }
+        }*/
         return true;
+    }
+
+    void paypause() {
+        if (player != null) {
+            if (player.isPlaying()) {
+                player.setPlayWhenReady(false);
+                   /* image_play.setVisibility(View.VISIBLE);
+                    iamge_pause.setVisibility(View.GONE); */
+            } else {
+                player.setPlayWhenReady(true);
+                   /* image_play.setVisibility(View.GONE);
+                    iamge_pause.setVisibility(View.VISIBLE); */
+            }
+        }
     }
 }
